@@ -1,6 +1,7 @@
 import 'package:e_commerce/screen/Notification.dart';
 import 'package:e_commerce/screen/camera_product.dart';
 import 'package:e_commerce/screen/cart_product.dart';
+import 'package:e_commerce/screen/detail_page.dart';
 import 'package:e_commerce/utils/product_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -179,76 +180,85 @@ class _HomePage extends State<HomePage> {
                   child: Row(
                     children: List.generate(
                       mylist.length,
-                      (index) => Container(
-                        height: size.height * 30 / 100,
-                        width: size.width * 50 / 100,
-                        margin: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 5,
-                              offset: Offset(3, 3),
-                            )
-                          ],
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    mylist[index]['thumbnail'],
+                      (index) => GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            'detail_page',
+                            arguments: mylist[index],
+                          );
+                        },
+                        child: Container(
+                          height: size.height * 30 / 100,
+                          width: size.width * 50 / 100,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 5,
+                                offset: Offset(3, 3),
+                              )
+                            ],
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      mylist[index]['thumbnail'],
+                                    ),
+                                    fit: BoxFit.cover,
                                   ),
-                                  fit: BoxFit.cover,
+                                ),
+                                margin: EdgeInsets.only(top: 40),
+                                height: 130,
+                                width: 130,
+                              ),
+                              Padding(padding: EdgeInsets.all(10)),
+                              Expanded(
+                                flex: 2,
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        mylist[index]['title'],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      // Text(
+                                      //   mylist[index]['description'],
+                                      //   maxLines: 2,
+                                      //   overflow: TextOverflow.ellipsis,
+                                      // ),
+                                      Text(
+                                        "\$ ${mylist[index]['price'].toString()}/-",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              margin: EdgeInsets.only(top: 40),
-                              height: 130,
-                              width: 130,
-                            ),
-                            Padding(padding: EdgeInsets.all(10)),
-                            Expanded(
-                              flex: 2,
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      mylist[index]['title'],
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    // Text(
-                                    //   mylist[index]['description'],
-                                    //   maxLines: 2,
-                                    //   overflow: TextOverflow.ellipsis,
-                                    // ),
-                                    Text(
-                                      "\$ ${mylist[index]['price'].toString()}/-",
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
